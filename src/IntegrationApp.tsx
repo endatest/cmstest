@@ -10,6 +10,24 @@ export const IntegrationApp: FC = () => {
   const [selectedItemNames, setSelectedItemNames] = useState<ReadonlyArray<string>>([]);
   const [elementValue, setElementValue] = useState<string | null>(null);
 
+  const [offers, setOffers] = useState([]);
+
+  const fetchProductsData = () => {
+    fetch("https://www.bordgaisenergy.ie/api/products/offers")
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        setOffers(data.gasOffers)
+      })
+  }
+
+  console.log('offers', offers);
+  useEffect(() => {
+    console.log('sdsds');
+    fetchProductsData();
+  }, []);
+
   const updateWatchedElementValue = useCallback((codename: string) => {
     CustomElement.getElementValue(codename, v => typeof v === 'string' && setWatchedElementValue(v));
   }, []);
@@ -31,6 +49,7 @@ export const IntegrationApp: FC = () => {
 
   useEffect(() => {
     CustomElement.setHeight(500);
+    fetchProductsData();
   }, []);
 
   useEffect(() => {
@@ -92,6 +111,16 @@ export const IntegrationApp: FC = () => {
         These are your selected item names: {selectedItemNames.join(', ')}
         <button onClick={selectItems}>Select different items</button>
       </section>
+      <section>
+      {/* {offers.length > 0 && (
+        <ul>
+          {offers.map(offer=> (
+            <li key={offer.id}>{offer.name} - {offer.offerCode}</li>
+          ))}
+        </ul>
+      )} */}
+      </section>
+
     </>
   );
 };
