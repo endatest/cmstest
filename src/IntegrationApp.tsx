@@ -13,7 +13,7 @@ export const IntegrationApp: FC = () => {
   const [offers, setOffers] = useState([]);
 
   const fetchProductsData = () => {
-    fetch("http://cors.io/?https://www.bordgaisenergy.ie/api/products/offers")
+    fetch("https://cors.io/?https://www.bordgaisenergy.ie/api/products/offers")
       .then(response => {
         return response.json()
       })
